@@ -1,0 +1,17 @@
+[package]
+name = "voipnp"
+version = "0.1.0"
+edition = "2021"
+authors = ["Mariano 'Qhawaq' Mancini <qhawaq@gmail.com>"]
+description="Voip PnP bootstrap provision server"
+
+[dependencies]
+clap = { version = "4.5.24", features = ["derive"] }
+comfy-table = "7.1.3"
+ctrlc = "3.4.5"
+log = "0.4.22"
+netdev = "0.32.0"
+rumqttc = "0.24.0"
+simple_logger = "5.0.0"
+socket2 = "0.5.8"
+
