@@ -34,7 +34,7 @@ enum Mode {
 #[command(author, version, about, long_about = None)]
 struct Args {
     /// Uri del server di provision 
-    #[arg(short, long, default_value="https://prov.magaldinnova.it/provision")]
+    #[arg(short, long, default_value="https://prov.magaldinnova.tech/provision")]
     uri: String,
 
     /// Interfaccia di rete da utilizzare, usa opzione -l o --list per ottenere la lista di interfacce
@@ -91,7 +91,9 @@ impl MyThr for MyThrValues {
 
         for hdr in str::from_utf8(&self.pktrcv).unwrap().split(HDRSEP) {
             if let Some((key, _value)) = hdr.split_once(':') {
-                self.hdrs.insert(key.to_string(), hdr.to_string());
+                //let mhd = hdr.to_string().replace("%3A","");
+                let mhd = hdr.to_string();
+                self.hdrs.insert(key.to_string(), mhd);
             }
         }
 
@@ -112,7 +114,7 @@ impl MyThr for MyThrValues {
 	    msg.push_str( &(format!("{}{}",self.hdrs.get("Call-ID").expect(""),HDRSEP))[..]);
 	    msg.push_str( &(format!("{}{}",self.hdrs.get("CSeq").expect(""),HDRSEP))[..]);
         msg.push_str( &(format!("{}{}",self.hdrs.get("Expires").expect(""),HDRSEP))[..]);
-        msg.push_str( &(format!("{}{}",self.hdrs.get("Content-Length").expect(""),HDRSEP))[..]);
+        msg.push_str( &(format!("{}{}{}",self.hdrs.get("Content-Length").expect(""),HDRSEP,HDRSEP))[..]);
         
         info!("Thread: {}, Invio msg OK", self.name); 
         debug!("Thread: {}, MSG OK \n---------\n{}\n---------\n", self.name, msg); 
